@@ -16,6 +16,17 @@
                     <a href="{{ route('curso.create') }}" class="btn btn-primary mt">Cadastrar Curso</a>
                 </div>
                 
+                @if (session('success'))
+                    <div class="alert alert-success mt-3" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger mt-3" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 <table class="table table-hover table-striped mt-5">
                     <thead>
                         <tr>
