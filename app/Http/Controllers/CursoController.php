@@ -23,7 +23,7 @@ class CursoController extends Controller
      */
     public function create()
     {
-        //
+        return view('curso.create');
     }
 
     /**
@@ -31,7 +31,11 @@ class CursoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $validacao = $request->validate([
+            'name' => 'required|string|min:3|max:50',
+            'description' => 'required|string|min:3|max:100',
+        ]);
     }
 
     /**
