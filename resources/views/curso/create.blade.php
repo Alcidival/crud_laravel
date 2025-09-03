@@ -34,8 +34,8 @@
                     </div>
 
                     <div class="form-group mt-3">
-                        <label for="descricao">Descrição do Curso</label>
-                        <input type="text" name="descricao" id="descrica" class="form-control" placeholder="Descrição do Curso" value="{{ old('description') }}">
+                        <label for="description">Descrição do Curso</label>
+                        <input type="text" name="description" id="description" class="form-control" placeholder="Descrição do Curso" value="{{ old('description') }}">
                     </div>
 
                     <div class="form-group mt-3">
