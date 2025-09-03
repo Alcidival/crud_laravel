@@ -14,7 +14,8 @@ class CursoController extends Controller
     {
         $cursos = Curso::all();
 
-        dd($cursos);
+        //dd($cursos);
+        return view('curso.index', ['cursos' => $cursos]);
     }
 
     /**
