@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -34,6 +35,7 @@ class AuthController extends Controller
         }
         
         return response()->json([
+            'status' => 500,
             'message' => 'Erro ao criar usuário'
         ], 500);
     }
@@ -60,6 +62,25 @@ class AuthController extends Controller
         return response()->json([
             'status' => 500,
             'message' => 'Usuário não encontrado'
+        ], 500);
+    }
+
+    public function logout(Request $request)
+    {
+        //dd($request);
+        $validatorToken = PersonalAccessToken::findToken($request['token']);
+        
+        if ($validatorToken) {
+            $validatorToken->delete();
+
+            return response()->json([
+                'message' => 'Token removido com sucesso'
+            ], 201);
+        }
+        
+        return response()->json([
+            'status' => 500,
+            'message' => 'Token invalido'
         ], 500);
     }
 }
