@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -34,6 +35,31 @@ class AuthController extends Controller
         
         return response()->json([
             'message' => 'Erro ao criar usuário'
+        ], 500);
+    }
+
+    public function login(Request $request)
+    {
+        //dd($request);
+        $validator = $request->validate([
+            'email' => 'required|string|email:rfc,dns',
+            'password' => 'required|min:8'
+        ]);
+
+        $validatorAuth = Auth::attempt(['email' => $validator['email'], 'password' => $validator['password']]);
+        
+        if ($validatorAuth) {
+            $user = User::where('email', $validator['email'])->first();
+            $token = $user->createToken('api_token', ['post:create', 'post:read'])->plainTextToken;
+
+            return response()->json([
+                'token' => $token
+            ], 201);
+        }
+        
+        return response()->json([
+            'status' => 500,
+            'message' => 'Usuário não encontrado'
         ], 500);
     }
 }
